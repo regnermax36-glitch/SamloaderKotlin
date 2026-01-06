@@ -1,3 +1,13 @@
+# 1.21.0 - January 2025 Update
+- Enhanced support for Samsung Galaxy Z Flip5 SM-F731B with latest firmware compatibility.
+- Updated to Kotlin 2.3.0 for improved performance and stability.
+- Updated Android Gradle Plugin to 8.13.0 for better build optimization.
+- Updated Compose to 1.11.0-alpha01 with latest UI improvements.
+- Added support for January 2025 security patches and firmware updates.
+- Improved compatibility with latest Samsung firmware releases (F731BXXS4DXLF and newer).
+- Enhanced TAC database for better IMEI generation accuracy.
+- General performance improvements and bug fixes.
+
 # 1.20.4
 - Improve error messages for invalid CSCs or missing firmware.
 - Update transparent appearance on macOS 26.

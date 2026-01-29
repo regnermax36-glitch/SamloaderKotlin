@@ -12,6 +12,7 @@ import tk.zwander.common.util.getFirmwareHistoryString
 import tk.zwander.common.util.getFirmwareHistoryStringFromSamsung
 import tk.zwander.common.util.invoke
 import tk.zwander.common.util.makeFirmwareString
+import tk.zwander.common.util.OneUIBetaDetector
 import tk.zwander.commonCompose.model.HistoryModel
 import tk.zwander.samloaderkotlin.resources.MR
 
@@ -42,12 +43,17 @@ object History {
 
         latest?.apply {
             val androidVersion = latest.attribute("o")?.value
+            val firmwareString = parseFirmware(latest.text())
+            
+            // Check if this is OneUI 8.5 beta firmware
+            val isBeta = OneUIBetaDetector.isOneUI85Beta(firmwareString, androidVersion)
+            val displayVersion = if (isBeta) "$androidVersion (OneUI 8.5 Beta)" else androidVersion
 
             items.add(
                 HistoryInfo(
                     date = null,
-                    androidVersion = androidVersion,
-                    firmwareString = parseFirmware(latest.text())
+                    androidVersion = displayVersion,
+                    firmwareString = firmwareString
                 )
             )
         }

@@ -62,10 +62,32 @@ fun rememberPhoneInfo(): PhoneInfo? {
     return remember {
         derivedStateOf {
             tac.takeIf { !it.isNullOrBlank() }?.let {
+                val systemProperties = Class.forName("android.os.SystemProperties")
+                val getMethod = systemProperties.getMethod("get", String::class.java)
+                
+                val model = getMethod.invoke(null, "ro.product.model") as String
+                
+                // Enhanced detection for SM-F731B (Galaxy Z Flip5) with OneUI 8.5 beta support
+                val enhancedModel = when {
+                    model.contains("SM-F731", ignoreCase = true) -> {
+                        val oneUIVersion = try {
+                            getMethod.invoke(null, "ro.build.version.oneui") as? String
+                        } catch (e: Exception) {
+                            null
+                        }
+                        
+                        if (oneUIVersion?.startsWith("8.5") == true) {
+                            "$model (OneUI 8.5 Beta)"
+                        } else {
+                            model
+                        }
+                    }
+                    else -> model
+                }
+                
                 PhoneInfo(
                     tac = tac,
-                    model = Class.forName("android.os.SystemProperties")
-                        .getMethod("get", String::class.java).invoke(null, "ro.product.model") as String,
+                    model = enhancedModel,
                 )
             }
         }

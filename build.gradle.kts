@@ -1,5 +1,5 @@
 val versionCode by extra(89)
-val versionName by extra("1.21.0-oneui85beta")
+val versionName by extra("1.21.0")
 
 val compileSdk by extra(36)
 val targetSdk by extra(36)

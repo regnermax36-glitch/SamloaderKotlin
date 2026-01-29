@@ -58,17 +58,6 @@ jobs:
         BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
         echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
         echo Last build tool version is: $BUILD_TOOL_VERSION
-    - name: Rename APK
-      run: |
-        # Find the built APK and rename it to the expected filename
-        BUILT_APK=$(find ${{ github.workspace }}/android/build/outputs/apk/release -name "*.apk" | head -1)
-        if [ -n "$BUILT_APK" ]; then
-          mv "$BUILT_APK" ${{ github.workspace }}/android/build/outputs/apk/release/bifrost_android_${{ steps.version.outputs.version }}.apk
-          echo "Renamed APK to bifrost_android_${{ steps.version.outputs.version }}.apk"
-        else
-          echo "No APK found to rename"
-          exit 1
-        fi
     - name: Upload APK
       if: ${{ always() }}
       uses: actions/upload-artifact@v4

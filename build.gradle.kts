@@ -1,5 +1,5 @@
-val versionCode by extra(88)
-val versionName by extra("1.20.4")
+val versionCode by extra(89)
+val versionName by extra("1.21.0")
 
 val compileSdk by extra(36)
 val targetSdk by extra(36)
@@ -9,7 +9,7 @@ val javaVersionEnum by extra(JavaVersion.VERSION_21)
 
 val groupName by extra("tk.zwander")
 val packageName by extra("tk.zwander.samsungfirmwaredownloader")
-val appName by extra("Bifrost")
+val appName by extra("Bifrost OneUI 8.5 Beta")
 
 val bugsnagJvmApiKey by extra("a5b9774e86bc615c2e49a572b8313489")
 val bugsnagAndroidApiKey by extra("3e0ed592029da1d5cc9b52160ef702ea")

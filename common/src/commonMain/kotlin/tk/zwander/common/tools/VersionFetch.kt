@@ -8,6 +8,7 @@ import tk.zwander.common.data.FetchResult
 import tk.zwander.common.util.globalHttpClient
 import tk.zwander.common.util.firstElementByTagName
 import tk.zwander.common.util.invoke
+import tk.zwander.common.util.OneUIBetaDetector
 import tk.zwander.samloaderkotlin.resources.MR
 
 /**
@@ -16,12 +17,35 @@ import tk.zwander.samloaderkotlin.resources.MR
 object VersionFetch {
     /**
      * Get the latest firmware version for a given model and region.
+     * Enhanced for OneUI 8.5 beta firmware detection.
      * @param model the device model.
      * @param region the device region.
      * @return a Pair(FirmwareString, AndroidVersion).
      */
     suspend fun getLatestVersion(model: String, region: String): FetchResult.VersionFetchResult {
         try {
+            // First try to fetch OneUI 8.5 beta firmware for supported devices
+            if (model.startsWith("SM-F731")) {
+                val betaInfo = OneUIBetaDetector.fetchBetaFirmware(model, region)
+                if (betaInfo?.isBeta == true && betaInfo.firmwareString != null) {
+                    val vc = betaInfo.firmwareString.split("/").toMutableList()
+                    
+                    if (vc.size == 3) {
+                        vc.add(vc[0])
+                    }
+                    if (vc[2] == "") {
+                        vc[2] = vc[0]
+                    }
+                    
+                    return FetchResult.VersionFetchResult(
+                        versionCode = vc.joinToString("/"),
+                        androidVersion = betaInfo.androidVersion ?: "",
+                        rawOutput = "OneUI 8.5 Beta detected via ${betaInfo.betaChannel} channel"
+                    )
+                }
+            }
+            
+            // Fallback to regular firmware detection
             val response = globalHttpClient.get(
                 urlString = "https://fota-cloud-dn.ospserver.net:443/firmware/${region}/${model}/version.xml",
             ) {

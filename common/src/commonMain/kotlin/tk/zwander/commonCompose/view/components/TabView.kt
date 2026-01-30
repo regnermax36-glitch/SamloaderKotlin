@@ -36,7 +36,7 @@ import tk.zwander.commonCompose.view.components.Page.Downloader
 import tk.zwander.commonCompose.view.components.Page.History
 import tk.zwander.commonCompose.view.components.Page.SettingsAbout
 import tk.zwander.commonCompose.view.pages.DecryptView
-import tk.zwander.commonCompose.view.pages.DownloadView
+import tk.zwander.commonCompose.view.pages.PortingView
 import tk.zwander.commonCompose.view.pages.HistoryView
 import tk.zwander.commonCompose.view.pages.SettingsAboutView
 import tk.zwander.samloaderkotlin.resources.MR
@@ -54,7 +54,7 @@ sealed class Page(
     val iconRes: ImageResource,
     val index: Int,
 ) {
-    data object Downloader : Page({ DownloadView() }, MR.strings.downloader, MR.images.download, 0)
+    data object Downloader : Page({ PortingView() }, MR.strings.downloader, MR.images.download, 0)
 
     data object Decrypter :
         Page({ DecryptView() }, MR.strings.decrypter, MR.images.lock_open_outline, 1)

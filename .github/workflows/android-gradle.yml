@@ -1,3 +1,6 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
 name: Build for Android
 
 on:
@@ -17,55 +20,57 @@ jobs:
       with:
         distribution: 'corretto'
         java-version: '21'
-    - name: Get Latest Release
-      id: release
-      uses: pozetroninc/github-action-get-latest-release@master
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: ${{ github.repository }}
+    - name: Get Version from build.gradle.kts
+      id: version
+      run: |
+        VERSION=$(grep 'val versionName by extra' build.gradle.kts | sed 's/.*extra("\(.*\)").*/\1/')
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Using version: $VERSION"
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
+#    - name: Cache Gradle and Build
+#      uses: actions/cache@v4
+#      with:
+#        path: |
+#          ~/.gradle/caches
+#          ~/.gradle/wrapper
+#          ${{ github.workspace }}/common/build
+#          ${{ github.workspace }}/android/build
+#        key: ${{ runner.os }}-gradle-android
+#        restore-keys: |
+#          ${{ runner.os }}-gradle-android
     - name: Build with Gradle
       run: |
         ./gradlew :android:packageRelease
         ./gradlew --stop
-
     - name: Upload Logs
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
         name: logs
         path: ${{ github.workspace }}/android/build/outputs/logs/
-
     - name: Check Output Exists
       run: ls -laR ${{ github.workspace }}/android/build/outputs/apk/
-
-    # We skip the signing step entirely to keep the APK unsigned
-    # - name: Sign APK
-    #   id: sign_apk
-    #   ... (Removed)
-
-    - name: Rename Unsigned APK
+    # https://github.com/r0adkll/sign-android-release/issues/84#issuecomment-1889636075
+    - name: Set up build tool version variable
+      shell: bash
       run: |
-        # Gradle usually outputs 'app-release-unsigned.apk' or similar. 
-        # We find any .apk in the release folder and rename it.
-        cd android/build/outputs/apk/release/
-        mv *-unsigned.apk bifrost_android_${{ steps.release.outputs.release }}_unsigned.apk
-
-    - name: Upload APK Artifact
+        BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
+        echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
+        echo Last build tool version is: $BUILD_TOOL_VERSION
+    - name: Upload APK
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Bifrost-Unsigned
-        path: ${{ github.workspace }}/android/build/outputs/apk/release/bifrost_android_${{ steps.release.outputs.release }}_unsigned.apk
-
-    - name: Upload Release APK to GitHub Release
+        name: Bifrost
+        path: ${{ github.workspace }}/android/build/outputs/apk/release/bifrost_android_1.21.0-release-unsigned.apk
+    - name: Upload Release APK
+      if: github.event_name == 'release'
       uses: ncipollo/release-action@v1
       with:
-        artifacts: ${{ github.workspace }}/android/build/outputs/apk/release/bifrost_android_${{ steps.release.outputs.release }}_unsigned.apk
+        artifacts: ${{ github.workspace }}/android/build/outputs/apk/release/bifrost_android_1.21.0-release-unsigned.apk
         token: ${{ secrets.GITHUB_TOKEN }}
         allowUpdates: true
         replacesArtifacts: false
         omitBodyDuringUpdate: true
-        tag: ${{ steps.release.outputs.release }}
+        tag: ${{ steps.version.outputs.version }}

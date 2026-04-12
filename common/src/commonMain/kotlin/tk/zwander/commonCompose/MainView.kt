@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import tk.zwander.commonCompose.view.LocalPagerState
 import tk.zwander.commonCompose.view.LocalUseTransparencyEffects
 import tk.zwander.commonCompose.view.components.BifrostTheme
-import tk.zwander.commonCompose.view.components.TabView
+import tk.zwander.commonCompose.view.components.OneUIBottomNavigation
 import tk.zwander.commonCompose.view.components.pages
 import kotlin.time.ExperimentalTime
 
@@ -67,7 +67,7 @@ fun MainView(
                         }
                     }
 
-                    TabView(
+                    OneUIBottomNavigation(
                         selectedPage = pagerState.currentPage,
                         onPageSelected = {
                             scope.launch {

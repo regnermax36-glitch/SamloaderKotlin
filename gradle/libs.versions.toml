@@ -45,7 +45,7 @@ richeditorCompose = "1.0.0-rc13"
 semver = "3.0.0"
 slf4j = "2.0.17"
 vaqua = "13"
-windowStyler = "0.3.3-20250226.143418-11"
+windowStyler = "0.3.2"
 xmlbuilder = "0.2.0"
 
 [libraries]

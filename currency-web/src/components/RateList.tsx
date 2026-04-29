@@ -12,8 +12,8 @@ const RateList: React.FC<RateListProps> = ({ rates }) => {
   return (
     <div className="glass-card w-full max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Live Exchange Rates</h2>
-        <span className="text-xs text-slate-400 bg-white/5 px-2 py-1 rounded-md">Base: USD</span>
+        <h2 className="text-xl font-semibold">Live-Wechselkurse</h2>
+        <span className="text-xs text-slate-400 bg-white/5 px-2 py-1 rounded-md">Basis: USD</span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -46,8 +46,8 @@ const RateList: React.FC<RateListProps> = ({ rates }) => {
       </div>
 
       <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center text-sm text-slate-400">
-        <p>Market data is updated every 15 minutes.</p>
-        <button className="text-primary-400 hover:text-primary-300 transition-colors">View All Currencies</button>
+        <p>Marktdaten werden alle 15 Minuten aktualisiert.</p>
+        <button className="text-primary-400 hover:text-primary-300 transition-colors">Alle Währungen anzeigen</button>
       </div>
     </div>
   );

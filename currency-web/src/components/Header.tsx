@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ onSettingsClick }) => {
         <button
           onClick={onSettingsClick}
           className="p-2 hover:bg-white/10 rounded-full transition-colors group"
-          title="Settings"
+          title="Einstellungen"
         >
           <SettingsIcon className="w-6 h-6 text-slate-300 group-hover:rotate-90 transition-transform duration-300" />
         </button>

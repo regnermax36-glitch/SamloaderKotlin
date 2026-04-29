@@ -31,13 +31,13 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, onClose, currentEndpoint, o
 
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
           <RefreshCw className="w-5 h-5 text-primary-400" />
-          API Configuration
+          API-Konfiguration
         </h2>
 
         <form onSubmit={handleSave} className="space-y-6">
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300 ml-1">
-              Data Endpoint URL
+              Daten-Endpunkt URL
             </label>
             <input
               type="url"
@@ -48,7 +48,7 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, onClose, currentEndpoint, o
               required
             />
             <p className="text-[10px] text-slate-500 ml-1">
-              Must return a JSON object with a <code className="text-primary-400">rates</code> property.
+              Muss ein JSON-Objekt mit einer <code className="text-primary-400">rates</code> Eigenschaft zurückgeben.
             </p>
           </div>
 
@@ -58,14 +58,14 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, onClose, currentEndpoint, o
               onClick={() => setEndpoint('https://api.exchangerate-api.com/v4/latest/USD')}
               className="flex-1 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-sm"
             >
-              Reset Default
+              Standard wiederherstellen
             </button>
             <button
               type="submit"
               className="flex-1 btn-primary flex items-center justify-center gap-2 text-sm"
             >
               <Save className="w-4 h-4" />
-              Save Changes
+              Speichern
             </button>
           </div>
         </form>

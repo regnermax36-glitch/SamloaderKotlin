@@ -25,11 +25,11 @@ const Converter: React.FC<ConverterProps> = ({ rates }) => {
 
   return (
     <div className="glass-card w-full max-w-2xl mx-auto mb-12">
-      <h2 className="text-xl font-semibold mb-6">Currency Converter</h2>
+      <h2 className="text-xl font-semibold mb-6">Währungsrechner</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-end">
         <div className="space-y-2">
-          <label className="text-sm text-slate-400 ml-1">Amount</label>
+          <label className="text-sm text-slate-400 ml-1">Betrag</label>
           <input
             type="number"
             value={amount}
@@ -41,7 +41,7 @@ const Converter: React.FC<ConverterProps> = ({ rates }) => {
 
         <div className="flex flex-col gap-4 md:flex-row md:items-end">
           <div className="space-y-2 flex-1">
-            <label className="text-sm text-slate-400 ml-1">From</label>
+            <label className="text-sm text-slate-400 ml-1">Von</label>
             <select
               value={fromCurrency}
               onChange={(e) => setFromCurrency(e.target.value)}
@@ -63,7 +63,7 @@ const Converter: React.FC<ConverterProps> = ({ rates }) => {
           </button>
 
           <div className="space-y-2 flex-1">
-            <label className="text-sm text-slate-400 ml-1">To</label>
+            <label className="text-sm text-slate-400 ml-1">Nach</label>
             <select
               value={toCurrency}
               onChange={(e) => setToCurrency(e.target.value)}
